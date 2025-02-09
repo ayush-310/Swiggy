@@ -1,23 +1,23 @@
-import React from 'react'
+import React from 'react';
 import { CDN_URL } from '../utils/constants';
 
 const RestaurantCard = ({ resData }) => {
-    const { name, cuisines, avgRating, costForTwo, deliveryTime, cloudinaryImageId } = resData.card.card.restaurants[0].info; // Adjusted based on API structure
+    const { name, cuisines, avgRating, costForTwo, cloudinaryImageId, sla } = resData.info;
 
     return (
-        <div className="res-card" style={{ backgroundColor: '#f0f0f0' }}>
+        <div className="restaurant-card">
             <img
-                className="res-logo"
+                className="restaurant-logo"
                 src={CDN_URL + cloudinaryImageId}
                 alt={name}
             />
-            <h3>{name}</h3>
-            <h4>{cuisines.join(', ')}</h4>
-            <h4>{avgRating} ⭐</h4>
-            <h4>₹ {costForTwo / 100} for two</h4>
-            <h4>{deliveryTime} mins</h4>
+            <h3 className="restaurant-name">{name}</h3>
+            <h4 className="restaurant-cuisines">{cuisines.join(", ")}</h4>
+            <h4 className="restaurant-rating">{avgRating} ⭐</h4>
+            <h4 className="restaurant-cost">{costForTwo}</h4>
+            <h4 className="restaurant-delivery-time">{sla.deliveryTime} mins</h4>
         </div>
-    )
-}
+    );
+};
 
-export default RestaurantCard
+export default RestaurantCard;

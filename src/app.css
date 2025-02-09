@@ -1,10 +1,10 @@
-*{
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
 
-.header{
+.header {
     margin: 5px;
     display: flex;
     justify-content: space-between;
@@ -16,45 +16,121 @@
     width: 100px;
 }
 
-.nav-items > ul {
+.nav-items>ul {
     display: flex;
     padding: 0px 20px;
 
 }
 
-.nav-items > ul > li {
+.nav-items>ul>li {
     list-style: none;
     margin: 20px;
 }
 
-.body{
+.body {
     margin: 5px;
     padding: 5px;
     border: 1px solid black;
 }
 
-.res-card{
-    width: 200px;
-    height: 400px;
-    padding: 5px;
-    margin: 5px;
-}
 
-.res-card:hover{
-    border: 1px solid black;
-    cursor: pointer;
-}
 
-.search{
+.search {
     padding: 10px;
 }
 
-.res-logo{
+.res-logo {
     width: 100%;
 }
 
-.res-container{
+.res-container {
     display: flex;
     flex-wrap: wrap;
-    /* justify-content: spaceound; */
+    justify-content: center;
+}
+
+
+/* Restaurant Card Styles */
+.restaurant-card {
+    width: 280px;
+    border-radius: 20px;
+    background-color: #fff;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+    margin: 20px;
+}
+
+.restaurant-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.restaurant-logo {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+}
+
+.restaurant-card:hover .restaurant-logo {
+    transform: scale(1.05);
+}
+
+.restaurant-name {
+    font-size: 1.5rem;
+    margin: 12px 0 4px;
+    color: #333;
+    font-weight: bold;
+}
+
+.restaurant-cuisines,
+.restaurant-rating,
+.restaurant-cost,
+.restaurant-delivery-time {
+    font-size: 1rem;
+    margin: 4px 0;
+    color: #666;
+    text-align: center;
+}
+
+
+
+.restaurant-rating {
+    color: #4caf50;
+    font-weight: bold;
+}
+
+.restaurant-cost {
+    color: #ff5722;
+    font-weight: bold;
+}
+
+.restaurant-delivery-time {
+    background-color: #e0f7fa;
+    color: #00796b;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .restaurant-card {
+        width: 90%;
+    }
+
+    .restaurant-logo {
+        height: 150px;
+    }
+}
+
+.filter-btn {
+    margin: 10px;
+    cursor: pointer;
 }
