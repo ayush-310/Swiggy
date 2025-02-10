@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import './app.css';
 import Header from './components/Header';
 import Body from './components/Body';
