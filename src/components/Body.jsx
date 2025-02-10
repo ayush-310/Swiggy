@@ -5,8 +5,8 @@ import Shimmer from './Shimmer';
 
 const Body = () => {
 
-    const [ResList, setResList] = useState(resList);
-    const [filteredResList, setFilteredResList] = useState();
+    const [ResList, setResList] = useState([]);
+    const [filteredResList, setFilteredResList] = useState([]);
 
     const [searchText, setSearchText] = useState('');
 
@@ -16,16 +16,18 @@ const Body = () => {
 
     const fetchData = async () => {
         const data = await fetch(
-            "https://www.swiggy.com/dapi/restaurants/list/v5?lat=21.99740&lng=79.00110&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+            "https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.7040592&lng=77.10249019999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
         );
 
         const json = await data.json();
         console.log(json);
-        const resList1 = json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants || [];
+        // const resList1 = json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants || [];
         const resList2 = json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants || [];
 
         // setResList([...resList1, ...resList2]);
-        setFilteredResList(ResList)
+        setResList([...resList2]);
+        // setFilteredResList(ResList)
+        setFilteredResList([...resList2])
 
     }
 
