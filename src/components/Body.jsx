@@ -1,7 +1,9 @@
+// Body.jsx
 import React, { useEffect, useState } from 'react'
 import RestaurantCard from './RestaurantCard';
 import resList from '../utils/mockData';
 import Shimmer from './Shimmer';
+import { Link } from 'react-router-dom';
 
 const Body = () => {
 
@@ -49,19 +51,33 @@ const Body = () => {
                         setFilteredResList(FilterList);
                     }} > Search</button>
 
+                    <button
+                        className='reset-btn'
+                        onClick={() => setFilteredResList(ResList)}
+                    >
+                        Reset Filters
+                    </button>
                 </div>
 
                 <button
                     className='filter-btn'
                     onClick={() => {
-                        const TopRatedRes = resList.filter((res) => res.info.avgRating > 4.2);
-                        setResList(TopRatedRes);
-                    }} >Top Rated Restaurants</button>
+                        const TopRatedRes = ResList.filter((res) => res.info.avgRating > 4.3);
+                        setFilteredResList(TopRatedRes); // Corrected here
+                    }}
+                >
+                    Top Rated Restaurants
+                </button>
+
+
+
             </div>
             {/* <div className="search">Search</div> */}
             <div className="res-container">
                 {filteredResList?.map((resData, index) => (
-                    <RestaurantCard key={resData.info.id} resData={resData} />
+                    <Link style={{textDecoration:"none"}} key={resData.info.id} to={'/restaurants/' + resData.info.id}>
+                        <RestaurantCard resData={resData} />
+                    </Link>
                 ))}
             </div>
         </div >
