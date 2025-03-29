@@ -11,6 +11,9 @@ class UserClass extends React.Component {
             count2: 1
         }
     }
+    componentDidMount() {
+        console.log("User Class Mounted")
+    }
 
 
     render() {
