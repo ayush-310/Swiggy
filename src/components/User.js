@@ -1,9 +1,17 @@
-import { use, useState } from "react";
+import { use, useEffect, useState } from "react";
 
 const User = ({name}) => {
 
     const [count] = useState(0);
     const [count2] = useState(1);
+
+    useEffect(() => {
+
+    },[]);
+
+    async function fetchData() {
+        
+    }
 
     return (
         <div className="user-card">

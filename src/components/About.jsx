@@ -7,17 +7,17 @@ class About extends React.Component {
 
 
     componentDidMount() {
-        console.log("About Page Mounted")
+        // console.log("About Page Mounted")
     }
 
     render() {
         return (
             <div>
                 About page
-                <User name={"Ayush Function"} />
-                <UserClass name={"First"} location={"Gurgaon"} />
-                <UserClass name={"Second"} location={"Gurgaon"} />
-                <UserClass name={"Third"} location={"Gurgaon"} />
+                {/* <User name={"Ayush Function"} /> */}
+                <UserClass/>
+                {/* <UserClass name={"Second"} location={"Gurgaon"} /> */}
+                {/* <UserClass name={"Third"} location={"Gurgaon"} /> */}
             </div>
         )
     }
