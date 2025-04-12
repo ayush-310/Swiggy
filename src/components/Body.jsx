@@ -1,9 +1,9 @@
 // Body.jsx
 import React, { useEffect, useState } from 'react'
 import RestaurantCard from './RestaurantCard';
-import resList from '../utils/mockData';
 import Shimmer from './Shimmer';
 import { Link } from 'react-router-dom';
+import useOnlineStatus from '../utils/useOnlineStatus';
 
 const Body = () => {
 
@@ -34,7 +34,11 @@ const Body = () => {
     }
 
 
+    const onLineStatus = useOnlineStatus();
 
+    if (!onLineStatus) {
+        return <h1>Looks like you are offline. Please check your internet connection.</h1>
+    }
 
     return ResList.length === 0 ? <Shimmer /> : (
         <div className="body">
@@ -75,7 +79,7 @@ const Body = () => {
             {/* <div className="search">Search</div> */}
             <div className="res-container">
                 {filteredResList?.map((resData, index) => (
-                    <Link style={{textDecoration:"none"}} key={resData.info.id} to={'/restaurants/' + resData.info.id}>
+                    <Link style={{ textDecoration: "none" }} key={resData.info.id} to={'/restaurants/' + resData.info.id}>
                         <RestaurantCard resData={resData} />
                     </Link>
                 ))}
