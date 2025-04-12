@@ -1,30 +1,11 @@
-import React, { useEffect, useState } from 'react';
 import Shimmer from './Shimmer';
 import { useParams } from 'react-router-dom';
+import useRestaurantMenu from '../utils/useRestaurantMenu';
 
 const RestaurantMenu = () => {
-    const [resInfo, setResInfo] = useState(null);
     const { resId } = useParams();
 
-    useEffect(() => {
-        fetchMenu();
-    }, []); // Added dependency to avoid stale data
-
-    const fetchMenu = async () => {
-        try {
-            const response = await fetch(
-                `https://www.swiggy.com/dapi/menu/v5?restaurant_id=${resId}`
-            );
-            const json = await response.json();
-            console.log(json);
-
-            const data = json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants.info
-
-            setResInfo(data);
-        } catch (error) {
-            console.error("Error fetching menu data:", error);
-        }
-    };
+    const resInfo = useRestaurantMenu(resId);
 
     if (!resInfo) return <Shimmer />;
 
@@ -32,7 +13,10 @@ const RestaurantMenu = () => {
 
     // if (!restaurantDetails) return <p>Error loading menu details.</p>;
 
-    const { name, cuisines, avgRating, costForTwo } = resInfo;
+    const { name, cuisines, costForTwo,avgRating } = resInfo?.cards[0]?.card?.card?.info ;
+
+    const {itemCards} = resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card;
+    console.log(itemCards);
 
     return (
         <div className="menu">
