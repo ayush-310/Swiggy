@@ -9,13 +9,10 @@ const RestaurantMenu = () => {
 
     if (!resInfo) return <Shimmer />;
 
-    // const restaurantDetails = resInfo?.cards?.find(card => card?.card?.card?.info)?.card?.card?.info;
 
-    // if (!restaurantDetails) return <p>Error loading menu details.</p>;
+    const { name, cuisines, costForTwo, avgRating } = resInfo?.cards[0]?.card?.card?.info;
 
-    const { name, cuisines, costForTwo,avgRating } = resInfo?.cards[0]?.card?.card?.info ;
-
-    const {itemCards} = resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card;
+    const { itemCards } = resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card;
     console.log(itemCards);
 
     return (

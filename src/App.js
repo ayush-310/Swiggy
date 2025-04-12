@@ -6,6 +6,21 @@ import About from './components/About';
 import Contact from './components/Contact';
 import Error from './components/Error';
 import RestaurantMenu from './components/RestaurantMenu';
+// import Grocery from './components/Grocery';
+import { lazy, Suspense } from 'react';
+import Shimmer from './components/Shimmer';
+
+
+
+// Chunking 
+//Dynamic Bundling
+// Lazy Loading
+// Code Splitting - refers to splits the code in different chunks and loads them on demand.
+// React.lazy
+// React.lazy is a function that enables you to render a dynamic import as a regular component.
+// Dynamic Import
+
+const Grocery = lazy(() => import('./components/Grocery'));
 
 // Main App Component
 const App = () => {
@@ -38,6 +53,10 @@ const appRouter = createBrowserRouter([
       {
         path: '/restaurants/:resId',
         element: <RestaurantMenu />
+      },
+      {
+        path: '/grocery',
+        element: <Suspense fallback={<Shimmer />}> <Grocery /> </Suspense>
       },
     ],
     errorElement: <Error />
