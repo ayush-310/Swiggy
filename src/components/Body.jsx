@@ -1,20 +1,17 @@
-// Body.jsx
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import RestaurantCard from './RestaurantCard';
 import Shimmer from './Shimmer';
 import { Link } from 'react-router-dom';
 import useOnlineStatus from '../utils/useOnlineStatus';
 
 const Body = () => {
-
-    const [ResList, setResList] = useState([]);
+    const [resList, setResList] = useState([]);
     const [filteredResList, setFilteredResList] = useState([]);
-
     const [searchText, setSearchText] = useState('');
 
     useEffect(() => {
         fetchData();
-    }, [])
+    }, []);
 
     const fetchData = async () => {
         const data = await fetch(
@@ -22,70 +19,80 @@ const Body = () => {
         );
 
         const json = await data.json();
-        console.log(json);
-        // const resList1 = json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants || [];
         const resList2 = json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants || [];
 
-        // setResList([...resList1, ...resList2]);
         setResList([...resList2]);
-        // setFilteredResList(ResList)
-        setFilteredResList([...resList2])
+        setFilteredResList([...resList2]);
+    };
 
+    const onlineStatus = useOnlineStatus();
+
+    if (!onlineStatus) {
+        return (
+            <div className="text-center text-xl text-red-600 mt-10">
+                Looks like you are offline. Please check your internet connection.
+            </div>
+        );
     }
 
-
-    const onLineStatus = useOnlineStatus();
-
-    if (!onLineStatus) {
-        return <h1>Looks like you are offline. Please check your internet connection.</h1>
-    }
-
-    return ResList.length === 0 ? <Shimmer /> : (
-        <div className="body">
-            <div className='filter'>
-                <div className='search'>
-
-                    <input type="text"
+    return resList.length === 0 ? (
+        <Shimmer />
+    ) : (
+        <div className="p-6">
+            {/* Search and Filter Section */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
+                <div className="flex gap-2 items-center">
+                    <input
+                        type="text"
+                        placeholder="Search restaurants..."
                         value={searchText}
-                        onChange={(e) => { setSearchText(e.target.value) }}
-                        className='search-Box' />
-
-                    <button onClick={() => {
-                        const FilterList = ResList.filter((res) => res.info.name.toLowerCase().includes(searchText.toLowerCase()));
-                        setFilteredResList(FilterList);
-                    }} > Search</button>
-
+                        onChange={(e) => setSearchText(e.target.value)}
+                        className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
                     <button
-                        className='reset-btn'
-                        onClick={() => setFilteredResList(ResList)}
+                        onClick={() => {
+                            const filteredList = resList.filter((res) =>
+                                res.info.name.toLowerCase().includes(searchText.toLowerCase())
+                            );
+                            setFilteredResList(filteredList);
+                        }}
+                        className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300"
                     >
-                        Reset Filters
+                        Search
+                    </button>
+                    <button
+                        onClick={() => setFilteredResList(resList)}
+                        className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition duration-300"
+                    >
+                        Reset
                     </button>
                 </div>
 
                 <button
-                    className='filter-btn'
                     onClick={() => {
-                        const TopRatedRes = ResList.filter((res) => res.info.avgRating > 4.3);
-                        setFilteredResList(TopRatedRes); // Corrected here
+                        const topRated = resList.filter((res) => res.info.avgRating > 4.3);
+                        setFilteredResList(topRated);
                     }}
+                    className="bg-green-800 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-300"
                 >
                     Top Rated Restaurants
                 </button>
-
-
-
             </div>
-            {/* <div className="search">Search</div> */}
-            <div className="res-container">
-                {filteredResList?.map((resData, index) => (
-                    <Link style={{ textDecoration: "none" }} key={resData.info.id} to={'/restaurants/' + resData.info.id}>
+
+            {/* Restaurant Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {filteredResList?.map((resData) => (
+                    <Link
+                        key={resData.info.id}
+                        to={'/restaurants/' + resData.info.id}
+                        className="no-underline"
+                    >
                         <RestaurantCard resData={resData} />
                     </Link>
                 ))}
             </div>
-        </div >
-    )
-}
+        </div>
+    );
+};
 
-export default Body
+export default Body;
