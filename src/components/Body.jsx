@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import RestaurantCard from './RestaurantCard';
+import RestaurantCard, { withPromotedLabel } from './RestaurantCard';
 import Shimmer from './Shimmer';
 import { Link } from 'react-router-dom';
 import useOnlineStatus from '../utils/useOnlineStatus';
@@ -8,6 +8,8 @@ const Body = () => {
     const [resList, setResList] = useState([]);
     const [filteredResList, setFilteredResList] = useState([]);
     const [searchText, setSearchText] = useState('');
+
+    const PromotedRestaurantCard = withPromotedLabel(RestaurantCard);
 
     useEffect(() => {
         fetchData();
@@ -68,15 +70,27 @@ const Body = () => {
                     </button>
                 </div>
 
-                <button
-                    onClick={() => {
-                        const topRated = resList.filter((res) => res.info.avgRating > 4.3);
-                        setFilteredResList(topRated);
-                    }}
-                    className="bg-green-800 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-300"
-                >
-                    Top Rated Restaurants
-                </button>
+                <div className="flex flex-wrap gap-2">
+                    <button
+                        onClick={() => {
+                            const topRated = resList.filter((res) => res.info.avgRating > 4.3);
+                            setFilteredResList(topRated);
+                        }}
+                        className="bg-green-800 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-300"
+                    >
+                        Top Rated Restaurants
+                    </button>
+
+                    <button
+                        onClick={() => {
+                            const promotedList = resList.filter((res) => res.info.promoted === true);
+                            setFilteredResList(promotedList);
+                        }}
+                        className="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition duration-300"
+                    >
+                        Show Promoted Restaurants
+                    </button>
+                </div>
             </div>
 
             {/* Restaurant Cards */}
@@ -87,7 +101,11 @@ const Body = () => {
                         to={'/restaurants/' + resData.info.id}
                         className="no-underline"
                     >
-                        <RestaurantCard resData={resData} />
+                        {resData.info.promoted ? (
+                            <PromotedRestaurantCard resData={resData} />
+                        ) : (
+                            <RestaurantCard resData={resData} />
+                        )}
                     </Link>
                 ))}
             </div>
