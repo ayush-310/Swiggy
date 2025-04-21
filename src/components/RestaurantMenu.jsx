@@ -2,6 +2,7 @@ import Shimmer from './Shimmer';
 import { useParams } from 'react-router-dom';
 import useRestaurantMenu from '../utils/useRestaurantMenu';
 import { CDN_URL } from '../utils/constants';
+import RestaurantCategory from './RestaurantCategory';
 
 const RestaurantMenu = () => {
     const { resId } = useParams();
@@ -24,20 +25,30 @@ const RestaurantMenu = () => {
         if (items) itemCards.push(...items);
     });
 
+    const categories = regularCards.filter(
+        (c) =>
+            c.card?.card?.["@type"] === "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+    );
+    console.log("categories " + categories);
+
     return (
         <div className="px-6 py-8">
             {/* Restaurant Info Header */}
-            <div className="mb-8 text-center">
+            {/* <div className="mb-8 text-center">
                 <h1 className="text-3xl font-bold text-gray-800 mb-2">{name}</h1>
                 <p className="text-gray-600">{cuisines?.join(', ')}</p>
                 <p className="text-gray-600">{costForTwo}</p>
                 <div className="mt-2 text-sm text-yellow-600 font-medium">
                     ⭐ {avgRating} | {sla?.deliveryTime} mins
                 </div>
-            </div>
+            </div> */}
 
+            {/* Fixed Category Section */}
+            {categories.length > 0 && categories.map((category, index) => (
+                <RestaurantCategory key={index} data={category.card.card} />
+            ))}
             {/* Menu Items */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
+            {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
                 {itemCards.length > 0 ? (
                     itemCards.map((item) => {
                         const info = item.card.info;
@@ -75,7 +86,7 @@ const RestaurantMenu = () => {
                         No menu items available.
                     </p>
                 )}
-            </div>
+            </div> */}
 
 
         </div>
