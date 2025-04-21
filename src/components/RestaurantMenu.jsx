@@ -3,10 +3,13 @@ import { useParams } from 'react-router-dom';
 import useRestaurantMenu from '../utils/useRestaurantMenu';
 import { CDN_URL } from '../utils/constants';
 import RestaurantCategory from './RestaurantCategory';
+import { useState } from 'react';
 
 const RestaurantMenu = () => {
     const { resId } = useParams();
     const resInfo = useRestaurantMenu(resId);
+
+    const [showIndex, setShowIndex] = useState(0);
 
     if (!resInfo) return <Shimmer />;
 
@@ -45,7 +48,13 @@ const RestaurantMenu = () => {
 
             {/* Fixed Category Section */}
             {categories.length > 0 && categories.map((category, index) => (
-                <RestaurantCategory key={index} data={category.card.card} />
+                // Controlled Component
+                <RestaurantCategory
+                    key={index}
+                    data={category.card.card}
+                    showItems={index === showIndex ? true : false}
+                    setShowIndex={() => setShowIndex(index)}
+                />
             ))}
             {/* Menu Items */}
             {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
