@@ -7,8 +7,9 @@ import Contact from './components/Contact';
 import Error from './components/Error';
 import RestaurantMenu from './components/RestaurantMenu';
 // import Grocery from './components/Grocery';
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import Shimmer from './components/Shimmer';
+import UserContext from './utils/UserContext';
 
 
 
@@ -24,11 +25,25 @@ const Grocery = lazy(() => import('./components/Grocery'));
 
 // Main App Component
 const App = () => {
+
+  const [userInfo, setUserInfo] = useState();
+
+  useEffect(() => {
+    const data = {
+      name: "Ayush Srivastava",
+    };
+    setUserInfo(data.name);
+  }, []);
+
   return (
-    <div className="App">
-      <Header />
-      <Outlet />
-    </div>
+
+    <UserContext.Provider value={{ loggedInUser: userInfo }}>
+      <div className="App">
+        <Header />
+        <Outlet />
+      </div>
+    </UserContext.Provider>
+
   );
 };
 

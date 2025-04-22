@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { CDN_URL } from '../utils/constants';
+import UserContext from '../utils/UserContext';
 
 const RestaurantCard = ({ resData }) => {
     const {
@@ -10,6 +11,8 @@ const RestaurantCard = ({ resData }) => {
         cloudinaryImageId,
         sla,
     } = resData.info;
+
+    const { loggedInUser } = useContext(UserContext);
 
     return (
         <div className="bg-white shadow-lg rounded-xl overflow-hidden hover:scale-105 transform transition duration-300 cursor-pointer">
@@ -29,6 +32,7 @@ const RestaurantCard = ({ resData }) => {
                     </span>
                     <span>{costForTwo}</span>
                     <span>{sla.deliveryTime} mins</span>
+                    {/* <span>{loggedInUser} mins</span> */}
                 </div>
             </div>
         </div>
@@ -42,7 +46,7 @@ const RestaurantCard = ({ resData }) => {
 // Output : RestaurantCardWithPromotedLabel
 
 export const withPromotedLabel = (RestaurantCard) => {
-    return (props)=>{
+    return (props) => {
         return (
             <div className="relative">
                 <RestaurantCard {...props} />
