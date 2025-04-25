@@ -9,7 +9,10 @@ import RestaurantMenu from './components/RestaurantMenu';
 // import Grocery from './components/Grocery';
 import { lazy, Suspense, useEffect, useState } from 'react';
 import Shimmer from './components/Shimmer';
+import Cart from './components/Cart';
 import UserContext from './utils/UserContext';
+import { Provider } from 'react-redux';
+import appStore from './utils/appStore';
 
 
 
@@ -36,13 +39,14 @@ const App = () => {
   }, []);
 
   return (
-
-    <UserContext.Provider value={{ loggedInUser: userInfo }}>
-      <div className="App">
-        <Header />
-        <Outlet />
-      </div>
-    </UserContext.Provider>
+    <Provider store={appStore}>
+      <UserContext.Provider value={{ loggedInUser: userInfo }}>
+        <div className="App">
+          <Header />
+          <Outlet />
+        </div>
+      </UserContext.Provider>
+    </Provider>
 
   );
 };
@@ -72,6 +76,10 @@ const appRouter = createBrowserRouter([
       {
         path: '/grocery',
         element: <Suspense fallback={<Shimmer />}> <Grocery /> </Suspense>
+      },
+      {
+        path: '/cart',
+        element: <Cart />
       },
     ],
     errorElement: <Error />

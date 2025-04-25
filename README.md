@@ -13,4 +13,12 @@
  - Copyright
  - Links
  - Address
- - Contact  
+ - Contact
+
+# Redux Toolkit
+- Install @reduxja/toolkit and react-redux
+- Build our store
+- Connect our store to app
+- Create Slice (CartSlice) 
+- Dispatch (action)
+- Selector
