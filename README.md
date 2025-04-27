@@ -22,3 +22,9 @@
 - Create Slice (CartSlice) 
 - Dispatch (action)
 - Selector
+
+
+# Types of Testing
+ - Unit Testing - Testing one Component at a time
+ - Integration Testing - Testing Integration of one component with other component
+ - End to End Testing - Testing the flow from user landing on to the to checking out.
